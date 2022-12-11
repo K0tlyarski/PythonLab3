@@ -20,7 +20,7 @@ from Task5 import Iterator1_img
 
 
 class Ui_MainWindow(QWidget):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow) -> None:
         """function for working with a GUI object"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
@@ -61,7 +61,7 @@ class Ui_MainWindow(QWidget):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow) -> None:
         """a function for translating the text of buttons and working with buttons"""
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -79,7 +79,7 @@ class Ui_MainWindow(QWidget):
         self.pushButton_4.clicked.connect(self.task3)
         self.pushButton_5.clicked.connect(self.openDialog)
 
-    def get_folder(self):
+    def get_folder(self) -> None:
         """function for selecting the path to the project"""
         self.folder = QtWidgets.QFileDialog.getExistingDirectory(self, "Выбрать папку исходного датасета")
         try:
@@ -93,7 +93,7 @@ class Ui_MainWindow(QWidget):
             # error.StandardButton(QMessageBox.close())
             error.exec()
 
-    def task1(self):
+    def task1(self) -> None:
         """function to execute task1"""
         run1(self.folder, 'tiger', 'annotationLAB3TIGER')
         run1(self.folder, 'leopard', 'annotationLAB3Leopard')
@@ -102,7 +102,7 @@ class Ui_MainWindow(QWidget):
         compleate.setText("Задача выполнена")
         compleate.exec()
 
-    def task2(self):
+    def task2(self) -> None:
         """function to execute task2"""
         run2(self.folder, "datasetTask1", "Task2Annotation")
         compleate = QMessageBox()
@@ -110,7 +110,7 @@ class Ui_MainWindow(QWidget):
         compleate.setText("Задача выполнена")
         compleate.exec()
 
-    def task3(self):
+    def task3(self) -> None:
         """function to execute task3"""
         run3(self.folder, 'annotationTASK3.csv', 'datasetcopy2')
         compleate = QMessageBox()
@@ -118,14 +118,14 @@ class Ui_MainWindow(QWidget):
         compleate.setText("Задача выполнена")
         compleate.exec()
 
-    def openDialog(self):
+    def openDialog(self) -> None:
         """function for opening a new window"""
         dialog = ClssDialog(self)
         dialog.exec()
 
 
 class ClssDialog(QtWidgets.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         """constructor"""
         super(ClssDialog, self).__init__(parent)
         self.__iterator = Iterator1_img("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST", "tiger", "dataset")
@@ -172,7 +172,7 @@ class ClssDialog(QtWidgets.QDialog):
         self.radio_button_1.clicked.connect(self.buttonClicked)
         self.radio_button_2.clicked.connect(self.buttonClicked)
 
-    def buttonClicked(self):
+    def buttonClicked(self) -> None:
         """a function that checks which class of animal is selected in the radio button"""
         sender = self.sender()
         if sender.text() == 'tiger':
@@ -200,7 +200,7 @@ class ClssDialog(QtWidgets.QDialog):
                 self.__iterator.clear()
             print("Error")
 
-    def btnClosed(self):
+    def btnClosed(self) -> None:
         """window closing function"""
         self.close()
 
