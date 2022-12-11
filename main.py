@@ -21,6 +21,7 @@ from Task5 import Iterator1_img
 
 class Ui_MainWindow(QWidget):
     def setupUi(self, MainWindow):
+        """function for working with a GUI object"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
         self.folder = None
@@ -61,6 +62,7 @@ class Ui_MainWindow(QWidget):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
+        """a function for translating the text of buttons and working with buttons"""
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Выбрать путь к датасету"))
@@ -78,6 +80,7 @@ class Ui_MainWindow(QWidget):
         self.pushButton_5.clicked.connect(self.openDialog)
 
     def get_folder(self):
+        """function for selecting the path to the project"""
         self.folder = QtWidgets.QFileDialog.getExistingDirectory(self, "Выбрать папку исходного датасета")
         try:
             os.chdir(self.folder)
@@ -91,6 +94,7 @@ class Ui_MainWindow(QWidget):
             error.exec()
 
     def task1(self):
+        """function to execute task1"""
         run1(self.folder, 'tiger', 'annotationLAB3TIGER')
         run1(self.folder, 'leopard', 'annotationLAB3Leopard')
         compleate = QMessageBox()
@@ -99,6 +103,7 @@ class Ui_MainWindow(QWidget):
         compleate.exec()
 
     def task2(self):
+        """function to execute task2"""
         run2(self.folder, "datasetTask1", "Task2Annotation")
         compleate = QMessageBox()
         compleate.setWindowTitle("OK")
@@ -106,6 +111,7 @@ class Ui_MainWindow(QWidget):
         compleate.exec()
 
     def task3(self):
+        """function to execute task3"""
         run3(self.folder, 'annotationTASK3.csv', 'datasetcopy2')
         compleate = QMessageBox()
         compleate.setWindowTitle("OK")
@@ -113,13 +119,14 @@ class Ui_MainWindow(QWidget):
         compleate.exec()
 
     def openDialog(self):
-        #       pass
+        """function for opening a new window"""
         dialog = ClssDialog(self)
         dialog.exec()
 
 
 class ClssDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
+        """constructor"""
         super(ClssDialog, self).__init__(parent)
         self.__iterator = Iterator1_img("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST", "tiger", "dataset")
         self.__pixmap = QPixmap('.jpg')
@@ -166,25 +173,23 @@ class ClssDialog(QtWidgets.QDialog):
         self.radio_button_2.clicked.connect(self.buttonClicked)
 
     def buttonClicked(self):
+        """a function that checks which class of animal is selected in the radio button"""
         sender = self.sender()
         if sender.text() == 'tiger':
-            # print(sender.text())
             self.__iterator.setName(sender.text())
             self.__iterator.getName()
-            # IteratorTask1.setPath(sender.text())
-            # print(IteratorTask1.setPath(sender.text()))
+
         elif sender.text() == 'leopard':
             self.__iterator.setName(sender.text())
             self.__iterator.getName()
 
     def __nextButton(self, ) -> None:
-        '''toggle next and operate with exception'''
+        """toggle next and operate with exception"""
         try:
             tmp = os.path.join(os.path.join(self.__iterator.dataset, self.__iterator.path, self.__iterator.name),
                                self.__iterator.__next__())
             print(tmp)
             self.__pixmap = QPixmap(f"{tmp}").scaledToWidth(600).scaledToHeight(400)
-            # self.__pixmap = QPixmap(f"{tmp}")
             self.__lable.setPixmap(self.__pixmap)
             print(tmp)
         except:
@@ -196,6 +201,7 @@ class ClssDialog(QtWidgets.QDialog):
             print("Error")
 
     def btnClosed(self):
+        """window closing function"""
         self.close()
 
 
