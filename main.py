@@ -104,7 +104,7 @@ class Ui_MainWindow(QWidget):
 
     def task2(self) -> None:
         """function to execute task2"""
-        run2(self.folder, "datasetTask1", "Task2Annotation")
+        run2(self.folder, "datasetTask2", "Task2Annotation")
         compleate = QMessageBox()
         compleate.setWindowTitle("OK")
         compleate.setText("Задача выполнена")
@@ -112,7 +112,7 @@ class Ui_MainWindow(QWidget):
 
     def task3(self) -> None:
         """function to execute task3"""
-        run3(self.folder, 'annotationTASK3.csv', 'datasetcopy2')
+        run3(self.folder, 'annotationTASK3', 'datasetcopy2')
         compleate = QMessageBox()
         compleate.setWindowTitle("OK")
         compleate.setText("Задача выполнена")
@@ -212,5 +212,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    MainWindow.setStyleSheet("#MainWindow{border-image:url(bg.png)}")
     MainWindow.show()
     sys.exit(app.exec())
