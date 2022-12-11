@@ -118,6 +118,85 @@ class Ui_MainWindow(QWidget):
         dialog.exec()
 
 
+class ClssDialog(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(ClssDialog, self).__init__(parent)
+        self.__iterator = Iterator1_img("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST", "tiger", "dataset")
+        self.__pixmap = QPixmap('.jpg')
+        self.resize(640, 650)
+        self.verticalLayout = QtWidgets.QGridLayout(self)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.pushButton = QtWidgets.QPushButton(self)
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setGeometry(QtCore.QRect(270, 600, 100, 32))
+        self.verticalLayout.setSpacing(10)
+        self.setLayout(self.verticalLayout)
+        self.setGeometry(300, 300, 350, 300)
+
+        self.pushButton_3 = QtWidgets.QPushButton(self)
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.setGeometry(QtCore.QRect(270, 90, 100, 32))
+
+        self.verticalLayout.addWidget(self.pushButton)
+        self.setWindowTitle("ImageTask")
+        self.pushButton.setText("Next")
+        self.pushButton.clicked.connect(self.__nextButton)
+        self.pushButton_3.setText("Close")
+        self.pushButton_3.clicked.connect(self.btnClosed)
+        self.verticalLayout.addWidget(self.pushButton_3)
+
+        pixmap = QPixmap("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST/dataset/tiger/0000.jpg").scaledToWidth(
+            600).scaledToHeight(400)
+        self.__lable = QLabel(self)
+
+        self.__lable.setPixmap(pixmap)
+
+        self.verticalLayout.addWidget(self.__lable)
+
+        self.radio_button_1 = QRadioButton('tiger')
+        self.radio_button_1.setChecked(True)
+        self.radio_button_1.setAccessibleName("tiger")
+
+        self.radio_button_2 = QRadioButton('leopard')
+        self.radio_button_2.setAccessibleName("leopard")
+
+        self.verticalLayout.addWidget(self.radio_button_1)
+        self.verticalLayout.addWidget(self.radio_button_2)
+        self.radio_button_1.clicked.connect(self.buttonClicked)
+        self.radio_button_2.clicked.connect(self.buttonClicked)
+
+    def buttonClicked(self):
+        sender = self.sender()
+        if sender.text() == 'tiger':
+            # print(sender.text())
+            self.__iterator.setName(sender.text())
+            self.__iterator.getName()
+            # IteratorTask1.setPath(sender.text())
+            # print(IteratorTask1.setPath(sender.text()))
+        elif sender.text() == 'leopard':
+            self.__iterator.setName(sender.text())
+            self.__iterator.getName()
+
+    def __nextButton(self, ) -> None:
+        '''toggle next and operate with exception'''
+        try:
+            tmp = os.path.join(os.path.join(self.__iterator.dataset, self.__iterator.path, self.__iterator.name),
+                               self.__iterator.__next__())
+            print(tmp)
+            self.__pixmap = QPixmap(f"{tmp}").scaledToWidth(600).scaledToHeight(400)
+            # self.__pixmap = QPixmap(f"{tmp}")
+            self.__lable.setPixmap(self.__pixmap)
+            print(tmp)
+        except:
+            reply = QMessageBox.question(self, 'End of img_class',
+                                         "empry, clear?", QMessageBox.Yes |
+                                         QMessageBox.No, QMessageBox.Yes)
+            if reply == QMessageBox.Yes:
+                self.__iterator.clear()
+            print("Error")
+
+    def btnClosed(self):
+        self.close()
 
 
 if __name__ == "__main__":
