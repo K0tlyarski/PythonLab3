@@ -202,15 +202,7 @@ class ClssDialog(QtWidgets.QDialog):
             error1 = QMessageBox()
             error1.setWindowTitle("Error")
             error1.setText("Закончились картинки")
-            # error.setIcon(self, QMessageBox.warning)
-            # error.StandardButton(QMessageBox.close())
-            error1.exec()
-            reply = QMessageBox.question(self, 'End of img_class',
-                                         "empry, clear?", QMessageBox.Yes |
-                                         QMessageBox.No, QMessageBox.Yes)
-            if reply == QMessageBox.Yes:
-                self.__iterator.clear()
-            print("Error")
+
 
     def btnClosed(self) -> None:
         """window closing function"""
