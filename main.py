@@ -20,6 +20,7 @@ from Task5 import Iterator1_img
 
 
 class Ui_MainWindow(QWidget):
+    """this class implements the execution of all tasks and the transition to a new window"""
     def setupUi(self, MainWindow) -> None:
         """function for working with a GUI object"""
         MainWindow.setObjectName("MainWindow")
@@ -125,10 +126,13 @@ class Ui_MainWindow(QWidget):
 
 
 class ClssDialog(QtWidgets.QDialog):
+    """this class implements an iteration of images for two classes of animals"""
     def __init__(self, parent=None) -> None:
         """constructor"""
         super(ClssDialog, self).__init__(parent)
-        self.__iterator = Iterator1_img("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST", "tiger", "dataset")
+        #/Users/vadimkotlarskij/Desktop/Python/Lab3TEST"
+        #"os.path.join("Users","vadimkotlarskij", "Desktop", "Python", "Lab3TEST")"
+        self.__iterator = Iterator1_img(os.path.join("/Users", "vadimkotlarskij", "Desktop", "Python", "Lab3TEST"), "tiger", "dataset")
         self.__pixmap = QPixmap('.jpg')
         self.resize(640, 650)
         self.verticalLayout = QtWidgets.QGridLayout(self)
@@ -151,9 +155,10 @@ class ClssDialog(QtWidgets.QDialog):
         self.pushButton_3.setText("Close")
         self.pushButton_3.clicked.connect(self.btnClosed)
         self.verticalLayout.addWidget(self.pushButton_3)
-
-        pixmap = QPixmap("/Users/vadimkotlarskij/Desktop/Python/Lab3TEST/dataset/tiger/0000.jpg").scaledToWidth(
+        #/ Users / vadimkotlarskij / Desktop / Python / Lab3TEST / dataset / tiger / 0000.jpg
+        pixmap = QPixmap(os.path.join("dataset", "tiger", "0000.jpg")).scaledToWidth(
             600).scaledToHeight(400)
+        print(pixmap)
         self.__lable = QLabel(self)
 
         self.__lable.setPixmap(pixmap)
@@ -185,6 +190,7 @@ class ClssDialog(QtWidgets.QDialog):
 
     def __nextButton(self, ) -> None:
         """toggle next and operate with exception"""
+
         try:
             tmp = os.path.join(os.path.join(self.__iterator.dataset, self.__iterator.path, self.__iterator.name),
                                self.__iterator.__next__())
@@ -193,6 +199,12 @@ class ClssDialog(QtWidgets.QDialog):
             self.__lable.setPixmap(self.__pixmap)
             print(tmp)
         except:
+            error1 = QMessageBox()
+            error1.setWindowTitle("Error")
+            error1.setText("Закончились картинки")
+            # error.setIcon(self, QMessageBox.warning)
+            # error.StandardButton(QMessageBox.close())
+            error1.exec()
             reply = QMessageBox.question(self, 'End of img_class',
                                          "empry, clear?", QMessageBox.Yes |
                                          QMessageBox.No, QMessageBox.Yes)

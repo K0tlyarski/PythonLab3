@@ -16,8 +16,12 @@ class Iterator1_img:
         if self.counter < self.limit:
             self.counter += 1
             return self.names[self.counter - 1]
-        else:
-            raise StopIteration
+        elif self.counter == self.limit:
+            self.counter = 0
+            self.counter += 1
+            return self.names[self.counter - 1]
+
+
 
     def init(self, dataset: str, name: str, path: str):
         if not "dataset" in path:
